@@ -12,13 +12,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loginButton.setOnClickListener {
-            if (usernameEditText.text.toString().equals("galicia") && passwordEditText.text.toString().equals("llueve")) {
+            if (MainPresenter.login(usernameEditText.text.toString(), passwordEditText.text.toString()))
                 loginSuccess()
-            } else
+            else
                 showError("Error en el login")
+
         }
         logoutButton.setOnClickListener {
-            if (System.currentTimeMillis() / 1000 % 2 == 0L) {
+            if (MainPresenter.logout(SystemClock())) {
                 logoutSuccess()
             } else
                 showError("Error en el logout")
