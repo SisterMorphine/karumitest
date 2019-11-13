@@ -8,21 +8,21 @@ class LoginTest {
 
     @Test
     fun successfulLogin() {
-        Assert.assertEquals(MainPresenter.login("galicia", "llueve"), true)
+        Assert.assertEquals(LogIn().login("galicia", "llueve"), true)
     }
 
     @Test
     fun notSuccessfulLogin() {
-        Assert.assertEquals(MainPresenter.login("galicia", "sopotamadre"), false)
+        Assert.assertEquals(LogIn().login("galicia", "sopotamadre"), false)
     }
 
     @Test
     fun successfulLogout() {
-        Assert.assertEquals(MainPresenter.logout(FixedTimeClock(Date(2222))), true)
+        Assert.assertEquals(LogOut().logout(FixedTimeClock(Date(2222))), true)
     }
 
     @Test
     fun notSuccessfulLogout() {
-        Assert.assertEquals(MainPresenter.logout(FixedTimeClock(Date(1111))), false)
+        Assert.assertEquals(LogOut().logout(FixedTimeClock(Date(1111))), false)
     }
 }

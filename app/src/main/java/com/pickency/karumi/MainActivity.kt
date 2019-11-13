@@ -6,41 +6,41 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainView {
+
+    private val presenter = MainPresenter(LogIn(), LogOut(), this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loginButton.setOnClickListener {
-            if (MainPresenter.login(usernameEditText.text.toString(), passwordEditText.text.toString()))
-                loginSuccess()
-            else
-                showError("Error en el login")
-
+            presenter.onLoginClicked(usernameEditText.text.toString(), passwordEditText.text.toString())
         }
+
         logoutButton.setOnClickListener {
-            if (MainPresenter.logout(SystemClock())) {
-                logoutSuccess()
-            } else
-                showError("Error en el logout")
+            presenter.onLogoutClicked(SystemClock())
+
         }
 
     }
 
-    private fun loginSuccess() {
+    override fun loginSuccess() {
         logoutButton.visibility = View.VISIBLE
         group.visibility = View.GONE
     }
 
-    private fun logoutSuccess() {
+    override fun logoutSuccess() {
         logoutButton.visibility = View.GONE
         group.visibility = View.VISIBLE
 
     }
 
-    private fun showError(errorText: String) {
+    override fun showLogoutError(errorText: String) {
         Toast.makeText(this, errorText, Toast.LENGTH_LONG).show()
+    }
 
+    override fun showLoginError(errorText: String) {
+        Toast.makeText(this, errorText, Toast.LENGTH_LONG).show()
     }
 
 }

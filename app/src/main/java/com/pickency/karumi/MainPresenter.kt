@@ -1,13 +1,25 @@
 package com.pickency.karumi
 
-object MainPresenter {
+class MainPresenter(val logIn: LogIn, val logOut: LogOut, val mainView: MainView) {
 
-    fun login(user: String, pass: String): Boolean {
-        return ((user == "galicia" && pass == "llueve"))
+    fun onLoginClicked(username: String, password: String) {
+        if (logIn.login(username, password)) {
+            mainView.loginSuccess()
+        } else
+            mainView.showLoginError("Login error")
     }
 
-    fun logout(clock: Clock): Boolean {
-        return clock.now().time / 1000 % 2 == 0L
+    fun onLogoutClicked(clock: Clock) {
+        if (logOut.logout(clock)) {
+            mainView.logoutSuccess()
+        } else
+            mainView.showLogoutError("Logout error")
     }
+}
 
+interface MainView {
+    fun loginSuccess()
+    fun logoutSuccess()
+    fun showLoginError(errorText: String)
+    fun showLogoutError(errorText: String)
 }
